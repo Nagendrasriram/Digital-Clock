@@ -1,17 +1,32 @@
-body{
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #222;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #fff;
+    background: #222;
+    color: white;
+    font-family: 'Arial', sans-serif;
 }
-.clock
-{
-    font-size: 50px;
-    background: #444;
+
+.container {
+    text-align: center;
+    background: #333;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px #333;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.clock {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffcc00;
+    
+    margin-bottom: 10px;
+    
+}
+
+.date {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffcc00;
 }
