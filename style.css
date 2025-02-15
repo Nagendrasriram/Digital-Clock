@@ -1,32 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: #222;
-    color: white;
-    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
+    color: #fff;
+    transition: background 0.5s ease;
 }
 
-.container {
+.clock-container {
     text-align: center;
-    background: #333;
+    background: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
 }
 
 .clock {
     font-size: 3rem;
     font-weight: bold;
-    color: #ffcc00;
-    
     margin-bottom: 10px;
-    
 }
 
-.date {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ffcc00;
+#date, #dayOfWeek, #quote, #weather {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffd700;
+}
+
+.clock span, #ampm {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.clock span:hover {
+    transform: scale(1.2);
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    background: #ffd700;
+    color: #000;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #ffb347;
+}
+
+.dark-theme {
+    background: linear-gradient(135deg, #000428, #004e92);
+}
+
+.dark-theme button {
+    background: #ffcc00;
+    color: #222;
 }

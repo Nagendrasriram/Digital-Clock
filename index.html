@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock</title>
+    <title>Digital Clock with Features</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        
-    <div class="clock">
-        <span id="hours">00</span> :
-        <span id="minutes">00</span> :
-        <span id="seconds">00</span>
-        <span id="format">AM</span><br>
+    <div class="clock-container">
+        <button id="themeToggle">🌙</button>  <!-- Theme Toggle -->
+        <h2 id="greeting">Hello!</h2>
+        <div class="clock">
+            <span id="hours">00</span> :
+            <span id="minutes">00</span> :
+            <span id="seconds">00</span>
+            <span id="ampm">AM</span>
+        </div>
+        <div id="date">
+            <span id="day">00</span> -
+            <span id="month">00</span> -
+            <span id="year">0000</span>
+        </div>
+        <div id="dayOfWeek">Monday</div>
+        <p id="quote">"Stay positive and work hard!"</p>  <!-- Motivational Quote -->
+        <p id="weather">Fetching weather...</p>  <!-- Weather Display -->
+        <button id="formatToggle">Switch to 24-hour</button>  <!-- Time Format Toggle -->
     </div>
 
-    <div id="date">
-        <span id="day">00</span> -
-        <span id="month">00</span> -
-        <span id="year">0000</span>
-    </div>
-</div>
-     <!-- Display Date in DD-MM-YYYY format -->
     <script src="script.js"></script>
-    
 </body>
 </html>
