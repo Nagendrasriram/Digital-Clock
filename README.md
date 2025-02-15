@@ -5,7 +5,7 @@ A **simple and stylish Digital Clock** built using **HTML, CSS, and JavaScript**
 ---
 
 ## 🚀 **Live Demo**
-🔗 **[Check it out here!](your-live-demo-link)**  
+🔗 **[Check it out here!]((https://nagendrasriram.github.io/Digital-Clock/))**  
 
 
 ---
