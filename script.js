@@ -1,94 +1,78 @@
-let is24HourFormat = false;
-
 function updateClock() {
-    const now = new Date();
-
+    let now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
     let seconds = now.getSeconds();
     let ampm = hours >= 12 ? 'PM' : 'AM';
 
-    if (!is24HourFormat) {
-        hours = hours % 12 || 12;
-    }
+    hours = hours % 12 || 12;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    const padZero = num => (num < 10 ? '0' + num : num);
+    let day = now.getDate();
+    let month = now.getMonth() + 1;
+    let year = now.getFullYear();
 
-    document.getElementById("hours").textContent = padZero(hours);
-    document.getElementById("minutes").textContent = padZero(minutes);
-    document.getElementById("seconds").textContent = padZero(seconds);
-    document.getElementById("ampm").textContent = is24HourFormat ? '' : ampm;
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
 
-    document.getElementById("day").textContent = padZero(now.getDate());
-    document.getElementById("month").textContent = padZero(now.getMonth() + 1);
-    document.getElementById("year").textContent = now.getFullYear();
-    document.getElementById("dayOfWeek").textContent = now.toLocaleString('en-us', { weekday: 'long' });
-
-    updateGreeting(hours, ampm);
-    updateBackground(hours);
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+    document.getElementById("ampm").textContent = ampm;
+    document.getElementById("day").textContent = day;
+    document.getElementById("month").textContent = month;
+    document.getElementById("year").textContent = year;
 }
 
-function updateGreeting(hours, ampm) {
-    let greeting = document.getElementById("greeting");
-
-    if (ampm === "AM") {
-        if (hours < 12) greeting.textContent = "Good Morning! ☀️";
-    } else {
-        if (hours < 5) greeting.textContent = "Good Afternoon! 🌞";
-        else greeting.textContent = "Good Evening! 🌙";
-    }
+// Fetch Random Quote
+function fetchQuote() {
+    let quotes = [
+        "Believe in yourself!",
+        "Your time is now!",
+        "Every second counts!",
+        "Keep pushing forward!",
+        "You are unstoppable!"
+    ];
+    document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
 }
 
-function updateBackground(hours) {
-    let body = document.body;
-
-    if (hours >= 5 && hours < 12) {
-        body.style.background = "linear-gradient(135deg, #ff9a9e, #fad0c4)";
-    } else if (hours >= 12 && hours < 18) {
-        body.style.background = "linear-gradient(135deg, #ffb347, #ffcc33)";
-    } else {
-        body.style.background = "linear-gradient(135deg, #1f1c2c, #928DAB)";
-    }
-}
-
-// Switch time format
-document.getElementById("formatToggle").addEventListener("click", () => {
-    is24HourFormat = !is24HourFormat;
-    document.getElementById("formatToggle").textContent = is24HourFormat ? "Switch to 12-hour" : "Switch to 24-hour";
-    updateClock();
-});
-
-// Toggle dark/light theme
-document.getElementById("themeToggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark-theme");
-    document.getElementById("themeToggle").textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
-});
-
-// Fetch weather data
+// Fetch Weather Data
 async function fetchWeather() {
     try {
-        const res = await fetch("https://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=auto:ip");
-        const data = await res.json();
-        document.getElementById("weather").textContent = `🌡 ${data.current.temp_c}°C | ${data.location.name}`;
+        let response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=37.7749&longitude=-122.4194&current_weather=true");
+        let data = await response.json();
+        let temperature = data.current_weather.temperature;
+        document.getElementById("weather").textContent = `🌡️ ${temperature}°C`;
     } catch (error) {
-        document.getElementById("weather").textContent = "Weather unavailable.";
+        document.getElementById("weather").textContent = "⚠️ Unable to fetch weather.";
     }
 }
 
-// Fetch motivational quotes
-async function fetchQuote() {
-    try {
-        const res = await fetch("https://api.quotable.io/random");
-        const data = await res.json();
-        document.getElementById("quote").textContent = `"${data.content}" - ${data.author}`;
-    } catch (error) {
-        document.getElementById("quote").textContent = "Keep pushing forward!";
-    }
-}
+// Toggle Theme
+document.getElementById("themeToggle").addEventListener("click", function() {
+    document.body.classList.toggle("dark-mode");
+});
 
-// Update clock and fetch data every second
+// Speak Time
+document.getElementById("speak").addEventListener("click", function() {
+    let time = document.getElementById("hours").textContent + ":" + document.getElementById("minutes").textContent;
+    let msg = new SpeechSynthesisUtterance("The time is " + time);
+    window.speechSynthesis.speak(msg);
+});
+
+// Battery Status
+navigator.getBattery().then(function(battery) {
+    function updateBattery() {
+        document.getElementById("battery").textContent = `🔋 Battery: ${Math.round(battery.level * 100)}%`;
+    }
+    updateBattery();
+    battery.addEventListener('levelchange', updateBattery);
+});
+
+// Run Updates
 setInterval(updateClock, 1000);
 setInterval(fetchQuote, 60000);
 fetchWeather();
-updateClock();
 fetchQuote();
+updateClock();
